@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.0.2/darkly/bootstrap.min.css">
+	</head>
+	<body>
+		<div class="container text-center">
+			<h1>Mutual IX</h1>
+			<p>Ever wanted to know which internet exchanges two networks have in common? Using PeeringDB, this website can find that information for you. Please note that it may take a few seconds to request and process the data.</p>
+			<div class="alert alert-danger d-none" id="alert"></div>
+			<form method="POST">
+				<div class="row">
+					<div class="col-5">
+						<label for="asn1" class="form-label">ASN 1</label>
+						<input type="number" name="asn1" class="form-control" id="asn1" required>
+					</div>
+					<div class="col-5">
+						<label for="asn2" class="form-label">ASN 2</label>
+						<input type="number" name="asn2" class="form-control" id="asn2" required>
+					</div>
+					<div class="col-2 d-flex align-items-end justify-content-center">
+						<button type="submit" class="btn btn-primary" style="height:40px;">Submit</button>
+					</div>
+				</div>
+			  </form>
+		</div>
+		<script>
+			// https://stackoverflow.com/a/901144
+			function getParameterByName(name, url = window.location.href) {
+				name = name.replace(/[\[\]]/g, '\\$&');
+				var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+					results = regex.exec(url);
+				if (!results) return null;
+				if (!results[2]) return '';
+				return decodeURIComponent(results[2].replace(/\+/g, ' '));
+			}
+
+			if (getParameterByName('error') !== null) {
+				var errorMsg = '';
+
+				switch (getParameterByName('error')) {
+					case 'required':
+						errorMsg = 'All fields are required';
+						break;
+					case 'numeric':
+						errorMsg = 'ASNs must be numeric (e.g. 15169) without the "AS" prefix';
+						break;
+					case 'same':
+						errorMsg = 'ASNs cannot be the same';
+						break;
+					case 'tw-err:pdb-no-asn':
+						errorMsg = 'PeeringDB did not return data for one or more ASNs';
+						break;
+					case 'tw-err:pdb-no-ix':
+						errorMsg = 'PeeringDB did not return IX data for one or more ASNs';
+						break;
+					default:
+						errorMsg = 'An error occurred';
+
+				}
+
+				document.getElementById('alert').innerText = errorMsg;
+				document.getElementById('alert').classList.remove('d-none');
+				
+				window.history.replaceState({}, document.title, "/");
+			}
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+	</body>
+</html>
