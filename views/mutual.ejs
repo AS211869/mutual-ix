@@ -6,12 +6,27 @@
 	<body>
 		<div class="container text-center">
 			<h1>Mutual IX</h1>
+			<a href="/"><-- Back</a>
+			<hr>
 			<% if (Object.keys(mutualIX).length > 0) { %>
 				<p>Found the following mutual internet exchanges between AS<%= asn1 %> and AS<%= asn2 %></p>
 
 				<ul class="list-group">
+					<li class="list-group-item fw-bold">
+						<div class="row">
+							<div class="col-4">IX Name</div>
+							<div class="col-4">AS<%= asn2 %> IPv4</div>
+							<div class="col-4">AS<%= asn2 %> IPv6</div>
+						</div>
+					</li>
 					<% for (var ix in mutualIX) { %>
-						<li class="list-group-item"><%= mutualIX[ix] %></li>
+						<li class="list-group-item">
+							<div class="row">
+								<div class="col-4"><%= mutualIX[ix].name %></div>
+								<div class="col-4"><%= mutualIX[ix].ipaddr4 || '-' %></div>
+								<div class="col-4"><%= mutualIX[ix].ipaddr6 || '-' %></div>
+							</div>
+						</li>
 					<% } %>
 				</ul>
 			<% } else { %>
@@ -39,6 +54,9 @@
 					case 'numeric':
 						errorMsg = 'ASNs must be numeric (e.g. 15169) without the "AS" prefix';
 						break;
+					case 'private':
+						errorMsg = 'Private ASNs are not allowed'
+						break;
 					case 'same':
 						errorMsg = 'ASNs cannot be the same';
 						break;
@@ -50,7 +68,6 @@
 						break;
 					default:
 						errorMsg = 'An error occurred';
-
 				}
 
 				document.getElementById('alert').innerText = errorMsg;

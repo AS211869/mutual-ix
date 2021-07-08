@@ -12,17 +12,19 @@
 				<div class="row">
 					<div class="col-5">
 						<label for="asn1" class="form-label">ASN 1</label>
-						<input type="number" name="asn1" class="form-control" id="asn1" required>
+						<input type="number" name="asn1" class="form-control" id="asn1" placeholder="13335" required>
 					</div>
 					<div class="col-5">
 						<label for="asn2" class="form-label">ASN 2</label>
-						<input type="number" name="asn2" class="form-control" id="asn2" required>
+						<input type="number" name="asn2" class="form-control" id="asn2" placeholder="15169" required>
 					</div>
 					<div class="col-2 d-flex align-items-end justify-content-center">
 						<button type="submit" class="btn btn-primary" style="height:40px;">Submit</button>
 					</div>
 				</div>
 			  </form>
+			  <hr>
+			  <p>This code behind this website is open source and available on <a target="_blank" href="https://github.com/AS211869/mutual-ix">GitHub</a>.</p>
 		</div>
 		<script>
 			// https://stackoverflow.com/a/901144
@@ -45,6 +47,9 @@
 					case 'numeric':
 						errorMsg = 'ASNs must be numeric (e.g. 15169) without the "AS" prefix';
 						break;
+					case 'private':
+						errorMsg = 'Private ASNs are not allowed'
+						break;
 					case 'same':
 						errorMsg = 'ASNs cannot be the same';
 						break;
@@ -56,7 +61,6 @@
 						break;
 					default:
 						errorMsg = 'An error occurred';
-
 				}
 
 				document.getElementById('alert').innerText = errorMsg;
