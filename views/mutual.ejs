@@ -22,7 +22,7 @@
 					<% for (var ix in mutualIX) { %>
 						<li class="list-group-item">
 							<div class="row">
-								<div class="col-4"><%= mutualIX[ix].name %></div>
+								<div class="col-4"><a href="https://www.peeringdb.com/ix/<%= mutualIX[ix].ix_id %>" target="_blank"><%= mutualIX[ix].name %></a></div>
 								<div class="col-4"><%= mutualIX[ix].ipaddr4 || '-' %></div>
 								<div class="col-4"><%= mutualIX[ix].ipaddr6 || '-' %></div>
 							</div>
